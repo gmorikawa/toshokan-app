@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
@@ -16,8 +16,15 @@ import { InputTextModule } from 'primeng/inputtext';
     ]
 })
 export class UserLoginPage {
+    clicks = signal(0);
+
     loginForm = new FormGroup({
         username: new FormControl(""),
         password: new FormControl("")
     });
+
+    onClick(e: MouseEvent) {
+        console.log(this.loginForm);
+        this.clicks.update((current) => current + 1);
+    }
 }

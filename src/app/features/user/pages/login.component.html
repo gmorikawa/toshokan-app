@@ -6,8 +6,8 @@
         <label for="password">Password: </label>
         <input id="password" type="password" pInputText formControlName="password" />
 
-        <p-button>
-            Login
+        <p-button (onClick)="onClick($event)">
+            {{ clicks() }}
         </p-button>
     </form>
 </p-card>
