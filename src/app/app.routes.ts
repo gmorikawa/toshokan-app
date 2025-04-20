@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 import { UserLoginPage } from './features/user/pages/login/login.component';
 
 import { WorkspaceLayout } from './layouts/workspace.layout';
-import { DocumentSearchPage } from './features/document/pages/search/search.page';
+import { BookSearchPage } from './features/book/pages/search/search.page';
+import { BookRegisterPage } from './features/book/pages/register/register.page';
 
 export const routes: Routes = [
     {
@@ -14,8 +15,12 @@ export const routes: Routes = [
         component: WorkspaceLayout,
         children: [
             {
-                path: "document/search",
-                component: DocumentSearchPage,
+                path: "book/search",
+                component: BookSearchPage,
+            },
+            {
+                path: "book/register",
+                component: BookRegisterPage,
             }
         ]
     },

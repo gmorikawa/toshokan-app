@@ -2,22 +2,41 @@
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
         <div class="logo"></div>
         <ul nz-menu nzTheme="dark" nzMode="inline">
-            <li nz-submenu nzTitle="User" nzIcon="user">
+            <li nz-submenu nzTitle="Books" nzIcon="book">
                 <ul>
-                    <li nz-menu-item>Tom</li>
-                    <li nz-menu-item>Bill</li>
-                    <li nz-menu-item>Alex</li>
+                    <li nz-menu-item><a routerLink="/library/book/register" routerLinkActive="active" ariaCurrentWhenActive="page">Register</a></li>
+                    <li nz-menu-item><a routerLink="/library/book/search" routerLinkActive="active" ariaCurrentWhenActive="page">Search</a></li>
                 </ul>
             </li>
-            <li nz-submenu nzTitle="Team" nzIcon="team">
+            <li nz-submenu nzTitle="Whitepapers" nzIcon="solution">
                 <ul>
-                    <li nz-menu-item>Team 1</li>
-                    <li nz-menu-item>Team 2</li>
+                    <li nz-menu-item>Register</li>
+                    <li nz-menu-item>Search</li>
                 </ul>
             </li>
-            <li nz-menu-item>
-                <nz-icon nzType="file" />
-                <span>File</span>
+            <li nz-submenu nzTitle="Publishers" nzIcon="idcard">
+                <ul>
+                    <li nz-menu-item>Register</li>
+                    <li nz-menu-item>Listing</li>
+                </ul>
+            </li>
+            <li nz-submenu nzTitle="Authors" nzIcon="team">
+                <ul>
+                    <li nz-menu-item>Register</li>
+                    <li nz-menu-item>Listing</li>
+                </ul>
+            </li>
+            <li nz-submenu nzTitle="Categories" nzIcon="group">
+                <ul>
+                    <li nz-menu-item>Register</li>
+                    <li nz-menu-item>Listing</li>
+                </ul>
+            </li>
+            <li nz-submenu nzTitle="Topics" nzIcon="tags">
+                <ul>
+                    <li nz-menu-item>Register</li>
+                    <li nz-menu-item>Listing</li>
+                </ul>
             </li>
         </ul>
     </nz-sider>

@@ -10,7 +10,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-    selector: "document-search-page",
+    selector: "book-search-page",
     templateUrl: "./search.page.html",
     styleUrl: "./search.page.css",
     imports: [
@@ -23,5 +23,5 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
         ReactiveFormsModule,
     ]
 })
-export class DocumentSearchPage {
+export class BookSearchPage {
 }
