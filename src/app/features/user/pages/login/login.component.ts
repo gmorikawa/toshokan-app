@@ -14,6 +14,7 @@ import { AuthService } from "../../../../../services/auth.service";
 import { Router } from "@angular/router";
 import { CredentialDTO } from "../../entities/credential.dto";
 import { TokenDTO } from "../../entities/token.dto";
+import { StorageService } from "../../../../../services/storage.service";
 
 @Component({
     selector: "user-login-page",
@@ -33,6 +34,7 @@ export class UserLoginPage {
     private formBuilder = inject(NonNullableFormBuilder);
     private service = inject(AuthService);
     private router = inject(Router);
+    private storage = inject(StorageService);
 
     user = signal<User>(new User());
 
@@ -47,11 +49,9 @@ export class UserLoginPage {
             const credential = this.loginForm.value as CredentialDTO;
             
             this.service.login(credential).subscribe((token: TokenDTO) => {
-                window.localStorage.setItem("access_token", token?.accessToken);
+                this.storage.saveData("access_token", token?.accessToken);
 
-                this.router.navigateByUrl("/document/search");
-
-                console.log(token);
+                this.router.navigateByUrl("/library/book/search");
             });
         } else {
             Object.values(this.loginForm.controls).forEach(control => {

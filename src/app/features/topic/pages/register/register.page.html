@@ -1,0 +1,13 @@
+<nz-card id="topic-card">
+    <form nz-form [formGroup]="topicForm" class="topic-form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please input topic name!">
+                <nz-input-group nzPrefixIcon="edit">
+                    <input type="text" nz-input formControlName="name" placeholder="Name" />
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+
+        <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Create</button>
+    </form>
+</nz-card>
