@@ -1,0 +1,12 @@
+<div class="buttons-group">
+    @for (button of buttons; track button.id) {
+        <button
+            nz-button
+            [type]="button.type ?? 'button'"
+            [nzType]="button.color ?? 'default'"
+            (click)="button?.onClick?.($event)"
+        >
+            {{ button.label }}
+        </button>
+    }
+</div>
