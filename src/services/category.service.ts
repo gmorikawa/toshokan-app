@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 
-import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
 import { StorageService } from "@services/storage.service";
 import { CategoryDTO } from "@features/category/entities/category.dto";

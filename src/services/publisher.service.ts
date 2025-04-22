@@ -4,19 +4,19 @@ import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { StorageService } from "@services/storage.service";
-import { Topic } from "@features/topic/entities/topic.model";
-import { TopicDTO } from "@features/topic/entities/topic.dto";
+import { Publisher } from "@features/publisher/entities/publisher.model";
+import { PublisherDTO } from "@features/publisher/entities/publisher.dto";
 
 const API = "http://localhost:8080/api/";
 
 @Injectable({ providedIn: 'root' })
-export class TopicService {
+export class PublisherService {
     private http = inject(HttpClient);
     private storage = inject(StorageService);
 
-    public getAll(): Observable<TopicDTO[]> {
-        return this.http.get<TopicDTO[]>(
-            API.concat("topics"),
+    public getAll(): Observable<PublisherDTO[]> {
+        return this.http.get<PublisherDTO[]>(
+            API.concat("publishers"),
             {
                 headers: {
                     Authorization: this.storage.getData("access_token") ?? ""
@@ -25,9 +25,9 @@ export class TopicService {
         );
     }
 
-    public getById(id: string): Observable<TopicDTO> {
-        return this.http.get<TopicDTO>(
-            API.concat(`topics/${id}`),
+    public getById(id: string): Observable<PublisherDTO> {
+        return this.http.get<PublisherDTO>(
+            API.concat(`publishers/${id}`),
             {
                 headers: {
                     Authorization: this.storage.getData("access_token") ?? ""
@@ -36,10 +36,10 @@ export class TopicService {
         );
     }
 
-    public create(topic: TopicDTO): Observable<TopicDTO> {
-        return this.http.post<TopicDTO>(
-            API.concat("topics"),
-            topic,
+    public create(publisher: PublisherDTO): Observable<PublisherDTO> {
+        return this.http.post<PublisherDTO>(
+            API.concat("publishers"),
+            publisher,
             {
                 headers: {
                     Authorization: this.storage.getData("access_token") ?? ""
@@ -48,10 +48,10 @@ export class TopicService {
         );
     }
 
-    public update(id: string, topic: TopicDTO): Observable<TopicDTO> {
-        return this.http.patch<TopicDTO>(
-            API.concat(`topics/${id}`),
-            topic,
+    public update(id: string, publisher: PublisherDTO): Observable<PublisherDTO> {
+        return this.http.patch<PublisherDTO>(
+            API.concat(`publishers/${id}`),
+            publisher,
             {
                 headers: {
                     Authorization: this.storage.getData("access_token") ?? ""
@@ -60,9 +60,9 @@ export class TopicService {
         );
     }
 
-    public remove(id: string): Observable<TopicDTO> {
-        return this.http.delete<TopicDTO>(
-            API.concat(`topics/${id}`),
+    public remove(id: string): Observable<PublisherDTO> {
+        return this.http.delete<PublisherDTO>(
+            API.concat(`publishers/${id}`),
             {
                 headers: {
                     Authorization: this.storage.getData("access_token") ?? ""
