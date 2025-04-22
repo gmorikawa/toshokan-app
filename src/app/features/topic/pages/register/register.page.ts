@@ -1,17 +1,20 @@
-import { Component, inject } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TopicService } from '../../../../../services/topic.service';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { TopicDTO } from '../../entities/topic.dto';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { Topic } from '../../entities/topic.model';
+import { Component, inject } from "@angular/core";
+import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+
+import { NzFormModule } from "ng-zorro-antd/form";
+import { NzInputModule } from "ng-zorro-antd/input";
+import { NzIconModule } from "ng-zorro-antd/icon";
+import { NzButtonModule } from "ng-zorro-antd/button";
+import { NzCardModule } from "ng-zorro-antd/card";
+
+import { TopicService } from "@services/topic.service";
+import { ButtonConfiguration, FormActions } from "@app/shared/form-actions/form-actions.component";
+import { Topic } from "@features/topic/entities/topic.model";
+import { TopicDTO } from "@features/topic/entities/topic.dto";
 
 @Component({
-    selector: 'topic-register-page',
+    selector: "topic-register-page",
     imports: [
         NzButtonModule,
         NzCardModule,
@@ -19,9 +22,10 @@ import { Topic } from '../../entities/topic.model';
         NzInputModule,
         NzIconModule,
         ReactiveFormsModule,
+        FormActions
     ],
-    templateUrl: './register.page.html',
-    styleUrl: './register.page.css',
+    templateUrl: "./register.page.html",
+    styleUrl: "./register.page.css",
 })
 export class TopicRegisterPage {
     private readonly route = inject(ActivatedRoute);
@@ -30,6 +34,21 @@ export class TopicRegisterPage {
     private readonly formBuilder = inject(NonNullableFormBuilder);
 
     private id = this.route.snapshot.paramMap.get('id');
+
+    formButtons: ButtonConfiguration[] = [
+        {
+            id: "add",
+            label: this.id ? "Update" : "Create",
+            type: "submit",
+            color: "primary"
+        }, {
+            id: "cancel",
+            label: "Cancel",
+            type: "button",
+            color: "default",
+            onClick: this.handleCancel.bind(this)
+        }
+    ];
 
     topicForm = new FormGroup({
         name: this.formBuilder.control("", Validators.required),
