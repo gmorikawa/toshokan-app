@@ -71,4 +71,8 @@ export class TopicRegisterPage {
             });
         }
     }
+
+    handleCancel(): void {
+        this.router.navigateByUrl("/library/topic/listing");
+    }
 }
