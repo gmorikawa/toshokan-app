@@ -1,0 +1,12 @@
+<nz-card>
+    <form nz-form nzLayout="vertical" [formGroup]="categoryForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+            <nz-form-label nzFor="checkPassword" nzRequired>Name</nz-form-label>
+            <nz-form-control nzErrorTip="Please input category name!" nzExtra="Category name must be unique">
+                <input type="text" nz-input formControlName="name" placeholder="Name" />
+            </nz-form-control>
+        </nz-form-item>
+
+        <form-actions [buttons]="formButtons" />
+    </form>
+</nz-card>

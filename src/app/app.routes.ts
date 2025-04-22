@@ -1,11 +1,17 @@
-import { Routes } from '@angular/router';
-import { UserLoginPage } from './features/user/pages/login/login.component';
+import { Routes } from "@angular/router";
 
-import { WorkspaceLayout } from './layouts/workspace.layout';
-import { BookSearchPage } from './features/book/pages/search/search.page';
-import { BookRegisterPage } from './features/book/pages/register/register.page';
-import { TopicListingPage } from './features/topic/pages/listing/listing.page';
-import { TopicRegisterPage } from './features/topic/pages/register/register.page';
+import { WorkspaceLayout } from "@layouts/workspace.layout";
+
+import { UserLoginPage } from "@features/user/pages/login/login.component";
+
+import { BookSearchPage } from "@features/book/pages/search/search.page";
+import { BookRegisterPage } from "@features/book/pages/register/register.page";
+
+import { CategoryListingPage } from "@features/category/pages/listing/listing.page";
+import { CategoryRegisterPage } from "@features/category/pages/register/register.page";
+
+import { TopicListingPage } from "@features/topic/pages/listing/listing.page";
+import { TopicRegisterPage } from "@features/topic/pages/register/register.page";
 
 export const routes: Routes = [
     {
@@ -25,15 +31,27 @@ export const routes: Routes = [
                 component: BookRegisterPage,
             },
             {
+                path: "category/listing",
+                component: CategoryListingPage
+            },
+            {
+                path: "category/register",
+                component: CategoryRegisterPage
+            },
+            {
+                path: "category/register/:id",
+                component: CategoryRegisterPage
+            },
+            {
                 path: "topic/listing",
                 component: TopicListingPage
             },
             {
-                path: "topic/register/:id",
+                path: "topic/register",
                 component: TopicRegisterPage
             },
             {
-                path: "topic/register",
+                path: "topic/register/:id",
                 component: TopicRegisterPage
             },
         ]
