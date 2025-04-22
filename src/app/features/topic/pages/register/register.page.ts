@@ -8,8 +8,8 @@ import { NzIconModule } from "ng-zorro-antd/icon";
 import { NzButtonModule } from "ng-zorro-antd/button";
 import { NzCardModule } from "ng-zorro-antd/card";
 
+import { ButtonConfiguration, FormActions } from "@shared/form-actions/form-actions.component";
 import { TopicService } from "@services/topic.service";
-import { ButtonConfiguration, FormActions } from "@app/shared/form-actions/form-actions.component";
 import { Topic } from "@features/topic/entities/topic.model";
 import { TopicDTO } from "@features/topic/entities/topic.dto";
 
