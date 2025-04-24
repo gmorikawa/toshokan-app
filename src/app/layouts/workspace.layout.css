@@ -36,6 +36,8 @@ nz-breadcrumb {
     flex-grow: 1;
     padding: 24px;
     background: #fff;
+
+    overflow: auto;
 }
 
 nz-footer {
