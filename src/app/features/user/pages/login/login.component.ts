@@ -1,13 +1,11 @@
 import { Component, inject, signal } from "@angular/core";
-import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzButtonModule } from "ng-zorro-antd/button";
+import { NzCardModule } from "ng-zorro-antd/card";
+import { NzCheckboxModule } from "ng-zorro-antd/checkbox";
+import { NzFormModule } from "ng-zorro-antd/form";
+import { NzInputModule } from "ng-zorro-antd/input";
 
 import { User } from "../../entities/user.model";
 import { AuthService } from "../../../../../services/auth.service";
@@ -26,7 +24,6 @@ import { StorageService } from "../../../../../services/storage.service";
         NzCardModule,
         NzFormModule,
         NzInputModule,
-        NzIconModule,
         ReactiveFormsModule,
     ]
 })
