@@ -17,6 +17,7 @@ import { Book } from "@features/book/entities/book.model";
 import { BookDTO } from "@features/book/entities/book.dto";
 import { CategoryService } from "@services/category.service";
 import { PublisherService } from "@services/publisher.service";
+import { TopicService } from "@services/topic.service";
 
 @Component({
     selector: "book-register-page",
@@ -41,12 +42,14 @@ export class BookRegisterPage {
     private readonly service = inject(BookService);
     private readonly categoryService = inject(CategoryService);
     private readonly publisherService = inject(PublisherService);
+    private readonly topicService = inject(TopicService);
     private readonly formBuilder = inject(NonNullableFormBuilder);
 
     private id = this.route.snapshot.paramMap.get('id');
 
     readonly categories$ = this.categoryService.getAll();
     readonly publishers$ = this.publisherService.getAll();
+    readonly topics$ = this.topicService.getAll();
 
     formButtons: ButtonConfiguration[] = [
         {
@@ -68,9 +71,10 @@ export class BookRegisterPage {
         year: this.formBuilder.control("", Validators.required),
         authors: this.formBuilder.control(""),
         description: this.formBuilder.control(""),
-        category: this.formBuilder.control(null),
+        category: this.formBuilder.control(null, Validators.required),
         publisher: this.formBuilder.control(null),
         isbn: this.formBuilder.control("", Validators.required),
+        topics: this.formBuilder.control([]),
     });
 
     ngOnInit() {
@@ -93,11 +97,11 @@ export class BookRegisterPage {
 
             if(this.id) {
                 this.service.update(this.id, bookDto).subscribe((book: BookDTO) => {
-                    this.router.navigateByUrl("/library/book/listing");
+                    this.router.navigateByUrl("/library/book/search");
                 });
             } else {
                 this.service.create(bookDto).subscribe((book: BookDTO) => {
-                    this.router.navigateByUrl("/library/book/listing");
+                    this.router.navigateByUrl("/library/book/search");
                 });
             }
         } else {

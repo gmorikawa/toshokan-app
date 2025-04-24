@@ -1,6 +1,7 @@
 import { BookDTO } from "@features/book/entities/book.dto";
 import { CategoryDTO } from "@features/category/entities/category.dto";
 import { PublisherDTO } from "@features/publisher/entities/publisher.dto";
+import { TopicDTO } from "@features/topic/entities/topic.dto";
 
 export class Book implements BookDTO {
     private _id: string;
@@ -13,6 +14,7 @@ export class Book implements BookDTO {
     private _publisherId: string;
     private _publisher: PublisherDTO | null;
     private _isbn: string;
+    private _topics: TopicDTO[]
 
     constructor(dto?: BookDTO) {
         this._id = dto?.id ?? "";
@@ -25,6 +27,7 @@ export class Book implements BookDTO {
         this._publisherId = dto?.publisherId ?? "";
         this._publisher = dto?.publisher ?? null;
         this._isbn = dto?.isbn ?? "";
+        this._topics = dto?.topics ?? [];
     }
 
     get id(): string {
@@ -105,5 +108,13 @@ export class Book implements BookDTO {
 
     set isbn(value: string) {
         this._isbn = value;
+    }
+
+    get topics(): TopicDTO[] {
+        return this._topics;
+    }
+
+    set topics(value: TopicDTO[]) {
+        this._topics = value;
     }
 }
