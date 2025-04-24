@@ -1,1 +1,28 @@
-<h1>Search Page</h1>
+<nz-table #basicTable [nzData]="books()">
+    <thead>
+        <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Publisher</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (data of basicTable.data; track data) {
+        <tr>
+            <td>{{ data.isbn }}</td>
+            <td>{{ data.title }}</td>
+            <td>{{ data.year }}</td>
+            <td>{{ data.publisher?.name }}</td>
+            <td>{{ data.category?.name }}</td>
+            <td>
+                <a [routerLink]="[`/library/book/register/`, data.id]">Edit</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="delete(data.id)">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</nz-table>

@@ -1,1 +1,62 @@
-<h1>Register Page</h1>
+<nz-card id="topic-card">
+    <form nz-form nzLayout="vertical" [formGroup]="bookForm" class="topic-form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+            <nz-form-label nzFor="book.isbn" nzRequired>ISBN</nz-form-label>
+            <nz-form-control nzErrorTip="Please input ISBN!">
+                <input id="book.isbn" type="text" nz-input formControlName="isbn" placeholder="978-3-16-148410-0" />
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="book.title" nzRequired>Title</nz-form-label>
+            <nz-form-control nzErrorTip="Please input book title!">
+                <input id="book.title" type="text" nz-input formControlName="title" placeholder="Title" />
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="book.year" nzRequired>Year</nz-form-label>
+            <nz-form-control nzErrorTip="Please input book year!">
+                <input id="book.year" type="text" nz-input formControlName="year" placeholder="Year" />
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="book.authors">Authors</nz-form-label>
+            <nz-form-control>
+                <input id="book.authors" type="text" nz-input formControlName="authors" placeholder="Authors" />
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="book.description">Description</nz-form-label>
+            <nz-form-control>
+                <textarea id="book.description" [rows]="4" nz-input formControlName="description"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="book.category">Category</nz-form-label>
+            <nz-form-control>
+                <nz-select id="book.category" formControlName="category">
+                    @for (category of (categories$ | async); track category.id) {
+                        <nz-option [nzValue]="category.id" [nzLabel]="category.name" />
+                    }
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="book.publisher">Publisher</nz-form-label>
+            <nz-form-control>
+                <nz-select id="book.publisher" formControlName="publisher">
+                    @for (publisher of (publishers$ | async); track publisher.id) {
+                        <nz-option [nzValue]="publisher.id" [nzLabel]="publisher.name" />
+                    }
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+
+        <form-actions [buttons]="formButtons" />
+    </form>
+</nz-card>

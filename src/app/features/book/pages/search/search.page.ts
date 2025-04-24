@@ -1,27 +1,42 @@
-import { Component } from "@angular/core";
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, signal } from "@angular/core";
+import { RouterLink } from "@angular/router";
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzDividerModule } from "ng-zorro-antd/divider";
+import { NzIconModule } from "ng-zorro-antd/icon";
+import { NzTableModule } from "ng-zorro-antd/table";
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { BookService } from "@services/book.service";
+import { Book } from "@features/book/entities/book.model";
+import { BookDTO } from "@features/book/entities/book.dto";
 
 @Component({
     selector: "book-search-page",
+    imports: [
+        RouterLink,
+        NzDividerModule,
+        NzTableModule,
+    ],
     templateUrl: "./search.page.html",
     styleUrl: "./search.page.css",
-    imports: [
-        NzButtonModule,
-        NzCheckboxModule,
-        NzCardModule,
-        NzFormModule,
-        NzInputModule,
-        NzIconModule,
-        ReactiveFormsModule,
-    ]
 })
 export class BookSearchPage {
+    private service = inject(BookService);
+
+    books = signal<Book[]>([]);
+
+    ngOnInit() {
+        this.loadData();
+    }
+
+    loadData(): void {
+        this.service.getAll().subscribe(booksDto => {
+            this.books.set(booksDto.map((dto) => new Book(dto)));
+        });
+    }
+
+    delete(id: string): void {
+        this.service.remove(id).subscribe((topic: BookDTO) => {
+            this.loadData();
+        });
+    }
 }
