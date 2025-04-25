@@ -38,9 +38,9 @@
         <nz-form-item>
             <nz-form-label nzFor="book.category" nzRequired>Category</nz-form-label>
             <nz-form-control nzErrorTip="Please select category!">
-                <nz-select id="book.category" formControlName="category">
+                <nz-select id="book.category" formControlName="category" [compareWith]="categoryComparator">
                     @for (category of (categories$ | async); track category.id) {
-                        <nz-option [nzValue]="category" [nzLabel]="category.name" />
+                        <nz-option [nzKey]="category.id" [nzValue]="category" [nzLabel]="category.name" />
                     }
                 </nz-select>
             </nz-form-control>
@@ -49,9 +49,9 @@
         <nz-form-item>
             <nz-form-label nzFor="book.publisher">Publisher</nz-form-label>
             <nz-form-control>
-                <nz-select id="book.publisher" formControlName="publisher">
+                <nz-select id="book.publisher" formControlName="publisher" [compareWith]="publisherComparator">
                     @for (publisher of (publishers$ | async); track publisher.id) {
-                        <nz-option [nzValue]="publisher" [nzLabel]="publisher.name" />
+                        <nz-option [nzKey]="publisher.id" [nzValue]="publisher" [nzLabel]="publisher.name" />
                     }
                 </nz-select>
             </nz-form-control>
@@ -60,9 +60,9 @@
         <nz-form-item>
             <nz-form-label nzFor="book.topic">Topics</nz-form-label>
             <nz-form-control>
-                <nz-select id="book.topic" formControlName="topics" nzMode="tags">
+                <nz-select id="book.topic" formControlName="topics" nzMode="tags" [compareWith]="topicComparator">
                     @for (topic of (topics$ | async); track topic.id) {
-                        <nz-option [nzValue]="topic" [nzLabel]="topic.name" />
+                        <nz-option [nzKey]="topic.id" [nzValue]="topic" [nzLabel]="topic.name" />
                     }
                 </nz-select>
             </nz-form-control>

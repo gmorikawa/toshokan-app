@@ -18,6 +18,10 @@ import { BookDTO } from "@features/book/entities/book.dto";
 import { CategoryService } from "@services/category.service";
 import { PublisherService } from "@services/publisher.service";
 import { TopicService } from "@services/topic.service";
+import { Nullable } from "@common/types/helpers";
+import { CategoryDTO } from "@features/category/entities/category.dto";
+import { PublisherDTO } from "@features/publisher/entities/publisher.dto";
+import { TopicDTO } from "@features/topic/entities/topic.dto";
 
 @Component({
     selector: "book-register-page",
@@ -67,14 +71,14 @@ export class BookRegisterPage {
     ];
 
     bookForm = new FormGroup({
-        title: this.formBuilder.control("", Validators.required),
-        year: this.formBuilder.control("", Validators.required),
-        authors: this.formBuilder.control(""),
-        description: this.formBuilder.control(""),
-        category: this.formBuilder.control(null, Validators.required),
-        publisher: this.formBuilder.control(null),
-        isbn: this.formBuilder.control("", Validators.required),
-        topics: this.formBuilder.control([]),
+        title: this.formBuilder.control<string>("", Validators.required),
+        year: this.formBuilder.control<Nullable<number>>(null, Validators.required),
+        authors: this.formBuilder.control<string[]>([]),
+        description: this.formBuilder.control<string>(""),
+        category: this.formBuilder.control<Nullable<CategoryDTO>>(null, Validators.required),
+        publisher: this.formBuilder.control<Nullable<PublisherDTO>>(null),
+        isbn: this.formBuilder.control<string>("", Validators.required),
+        topics: this.formBuilder.control<TopicDTO[]>([]),
     });
 
     ngOnInit() {
@@ -88,7 +92,26 @@ export class BookRegisterPage {
     populateForm(book: Book): void {
         this.bookForm.patchValue({
             title: book?.title,
+            year: book?.year,
+            description: book?.description,
+            authors: book?.authors,
+            category: book?.category,
+            publisher: book?.publisher,
+            isbn: book?.isbn,
+            topics: book?.topics
         });
+    }
+
+    categoryComparator(category1: CategoryDTO, category2: CategoryDTO): boolean {
+        return category1?.id === category2?.id;
+    }
+
+    topicComparator(topic1: TopicDTO, topic2: TopicDTO): boolean {
+        return topic1?.id === topic2?.id;
+    }
+
+    publisherComparator(publisher1: PublisherDTO, publisher2: PublisherDTO): boolean {
+        return publisher1?.id === publisher2?.id;
     }
 
     submitForm(): void {
