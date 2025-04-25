@@ -1,0 +1,24 @@
+<nz-table #basicTable [nzData]="whitepapers()">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (data of basicTable.data; track data) {
+        <tr>
+            <td>{{ data.title }}</td>
+            <td>{{ data.year }}</td>
+            <td>{{ data.category?.name }}</td>
+            <td>
+                <a [routerLink]="[`/library/whitepaper/register/`, data.id]">Edit</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="delete(data.id)">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</nz-table>

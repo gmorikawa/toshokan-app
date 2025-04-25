@@ -1,0 +1,55 @@
+<nz-card>
+    <form nz-form nzLayout="vertical" [formGroup]="whitepaperForm" class="topic-form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+            <nz-form-label nzFor="whitepaper.title" nzRequired>Title</nz-form-label>
+            <nz-form-control nzErrorTip="Please input whitepaper title!">
+                <input id="whitepaper.title" type="text" nz-input formControlName="title" placeholder="Title" />
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="whitepaper.year" nzRequired>Year</nz-form-label>
+            <nz-form-control nzErrorTip="Please input whitepaper year!">
+                <input id="whitepaper.year" type="text" nz-input formControlName="year" placeholder="Year" />
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="whitepaper.authors">Authors</nz-form-label>
+            <nz-form-control>
+                <input id="whitepaper.authors" type="text" nz-input formControlName="authors" placeholder="Authors" />
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="whitepaper.description">Description</nz-form-label>
+            <nz-form-control>
+                <textarea id="whitepaper.description" [rows]="4" nz-input formControlName="description"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="whitepaper.category" nzRequired>Category</nz-form-label>
+            <nz-form-control nzErrorTip="Please select category!">
+                <nz-select id="whitepaper.category" formControlName="category" [compareWith]="categoryComparator">
+                    @for (category of (categories$ | async); track category.id) {
+                        <nz-option [nzKey]="category.id" [nzValue]="category" [nzLabel]="category.name" />
+                    }
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="whitepaper.topic">Topics</nz-form-label>
+            <nz-form-control>
+                <nz-select id="whitepaper.topic" formControlName="topics" nzMode="tags" [compareWith]="topicComparator">
+                    @for (topic of (topics$ | async); track topic.id) {
+                        <nz-option [nzKey]="topic.id" [nzValue]="topic" [nzLabel]="topic.name" />
+                    }
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+
+        <form-actions [buttons]="formButtons" />
+    </form>
+</nz-card>

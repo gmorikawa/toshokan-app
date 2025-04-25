@@ -7,6 +7,9 @@ import { UserLoginPage } from "@features/user/pages/login/login.component";
 import { BookSearchPage } from "@features/book/pages/search/search.page";
 import { BookRegisterPage } from "@features/book/pages/register/register.page";
 
+import { WhitepaperSearchPage } from "@features/whitepaper/pages/search/search.page";
+import { WhitepaperRegisterPage } from "@features/whitepaper/pages/register/register.page";
+
 import { PublisherListingPage } from "@features/publisher/pages/listing/listing.page";
 import { PublisherRegisterPage } from "@features/publisher/pages/register/register.page";
 
@@ -32,6 +35,22 @@ export const routes: Routes = [
             {
                 path: "book/register",
                 component: BookRegisterPage,
+            },
+            {
+                path: "book/register/:id",
+                component: BookRegisterPage,
+            },
+            {
+                path: "whitepaper/search",
+                component: WhitepaperSearchPage,
+            },
+            {
+                path: "whitepaper/register",
+                component: WhitepaperRegisterPage,
+            },
+            {
+                path: "whitepaper/register/:id",
+                component: WhitepaperRegisterPage,
             },
             {
                 path: "publisher/listing",
