@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
@@ -10,18 +11,22 @@ import { NzFormModule } from "ng-zorro-antd/form";
 import { NzIconModule } from "ng-zorro-antd/icon";
 import { NzInputModule } from "ng-zorro-antd/input";
 import { NzSelectModule } from "ng-zorro-antd/select";
+import { NzTabsModule } from "ng-zorro-antd/tabs";
+import { NzUploadFile, NzUploadModule } from "ng-zorro-antd/upload";
 
+import { Nullable } from "@common/types/helpers";
 import { ButtonConfiguration, FormActions } from "@shared/form-actions/form-actions.component";
 import { BookService } from "@services/book.service";
-import { Book } from "@features/book/entities/book.model";
-import { BookDTO } from "@features/book/entities/book.dto";
+import { StorageService } from "@services/storage.service";
 import { CategoryService } from "@services/category.service";
 import { PublisherService } from "@services/publisher.service";
 import { TopicService } from "@services/topic.service";
-import { Nullable } from "@common/types/helpers";
+import { Book } from "@features/book/entities/book.model";
+import { BookDTO } from "@features/book/entities/book.dto";
 import { CategoryDTO } from "@features/category/entities/category.dto";
 import { PublisherDTO } from "@features/publisher/entities/publisher.dto";
 import { TopicDTO } from "@features/topic/entities/topic.dto";
+import { Observable } from 'rxjs';
 
 @Component({
     selector: "book-register-page",
@@ -35,6 +40,8 @@ import { TopicDTO } from "@features/topic/entities/topic.dto";
         NzInputModule,
         NzIconModule,
         NzSelectModule,
+        NzTabsModule,
+        NzUploadModule,
         ReactiveFormsModule,
         FormActions,
         CommonModule
@@ -48,12 +55,21 @@ export class BookRegisterPage {
     private readonly publisherService = inject(PublisherService);
     private readonly topicService = inject(TopicService);
     private readonly formBuilder = inject(NonNullableFormBuilder);
+    private readonly storage = inject(StorageService);
 
-    private id = this.route.snapshot.paramMap.get('id');
+    uploading = false;
+    fileList: NzUploadFile[] = [];
+
+    id = this.route.snapshot.paramMap.get('id');
 
     readonly categories$ = this.categoryService.getAll();
     readonly publishers$ = this.publisherService.getAll();
     readonly topics$ = this.topicService.getAll();
+    readonly files$ = this.service.getFiles(this.id);
+
+    headers = {
+        Authorization: this.storage.getData("access_token") ?? ""
+    };
 
     formButtons: ButtonConfiguration[] = [
         {
@@ -118,7 +134,7 @@ export class BookRegisterPage {
         if (this.bookForm.valid) {
             const bookDto = this.bookForm.value as unknown as BookDTO;
 
-            if(this.id) {
+            if (this.id) {
                 this.service.update(this.id, bookDto).subscribe((book: BookDTO) => {
                     this.router.navigateByUrl("/library/book/search");
                 });
@@ -139,5 +155,33 @@ export class BookRegisterPage {
 
     handleCancel(): void {
         this.router.navigateByUrl("/library/book/search");
+    }
+
+    beforeUpload = (file: NzUploadFile): boolean => {
+        this.fileList = this.fileList.concat(file);
+        return false;
+    };
+
+    handleUpload(): void {
+        this.uploading = true;
+
+        this.fileList.forEach((file: any) => {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append("description", "Random text");
+
+            this.service.upload(this.id as string, formData)
+                .subscribe({
+                    next: () => {
+                        this.uploading = false;
+                        this.fileList = [];
+                        console.log('upload successfully.');
+                    },
+                    error: () => {
+                        this.uploading = false;
+                        console.log('upload failed.');
+                    }
+                });
+        });
     }
 }

@@ -1,73 +1,108 @@
 <nz-card id="topic-card">
-    <form nz-form nzLayout="vertical" [formGroup]="bookForm" class="topic-form" (ngSubmit)="submitForm()">
-        <nz-form-item>
-            <nz-form-label nzFor="book.isbn" nzRequired>ISBN</nz-form-label>
-            <nz-form-control nzErrorTip="Please input ISBN!">
-                <input id="book.isbn" type="text" nz-input formControlName="isbn" placeholder="978-3-16-148410-0" />
-            </nz-form-control>
-        </nz-form-item>
+    <nz-tabset>
+        <nz-tab nzTitle="Data">
+            <form nz-form nzLayout="vertical" [formGroup]="bookForm" class="topic-form" (ngSubmit)="submitForm()">
+                <nz-form-item>
+                    <nz-form-label nzFor="book.isbn" nzRequired>ISBN</nz-form-label>
+                    <nz-form-control nzErrorTip="Please input ISBN!">
+                        <input id="book.isbn" type="text" nz-input formControlName="isbn"
+                            placeholder="978-3-16-148410-0" />
+                    </nz-form-control>
+                </nz-form-item>
 
-        <nz-form-item>
-            <nz-form-label nzFor="book.title" nzRequired>Title</nz-form-label>
-            <nz-form-control nzErrorTip="Please input book title!">
-                <input id="book.title" type="text" nz-input formControlName="title" placeholder="Title" />
-            </nz-form-control>
-        </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzFor="book.title" nzRequired>Title</nz-form-label>
+                    <nz-form-control nzErrorTip="Please input book title!">
+                        <input id="book.title" type="text" nz-input formControlName="title" placeholder="Title" />
+                    </nz-form-control>
+                </nz-form-item>
 
-        <nz-form-item>
-            <nz-form-label nzFor="book.year" nzRequired>Year</nz-form-label>
-            <nz-form-control nzErrorTip="Please input book year!">
-                <input id="book.year" type="text" nz-input formControlName="year" placeholder="Year" />
-            </nz-form-control>
-        </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzFor="book.year" nzRequired>Year</nz-form-label>
+                    <nz-form-control nzErrorTip="Please input book year!">
+                        <input id="book.year" type="text" nz-input formControlName="year" placeholder="Year" />
+                    </nz-form-control>
+                </nz-form-item>
 
-        <nz-form-item>
-            <nz-form-label nzFor="book.authors">Authors</nz-form-label>
-            <nz-form-control>
-                <input id="book.authors" type="text" nz-input formControlName="authors" placeholder="Authors" />
-            </nz-form-control>
-        </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzFor="book.authors">Authors</nz-form-label>
+                    <nz-form-control>
+                        <input id="book.authors" type="text" nz-input formControlName="authors" placeholder="Authors" />
+                    </nz-form-control>
+                </nz-form-item>
 
-        <nz-form-item>
-            <nz-form-label nzFor="book.description">Description</nz-form-label>
-            <nz-form-control>
-                <textarea id="book.description" [rows]="4" nz-input formControlName="description"></textarea>
-            </nz-form-control>
-        </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzFor="book.description">Description</nz-form-label>
+                    <nz-form-control>
+                        <textarea id="book.description" [rows]="4" nz-input formControlName="description"></textarea>
+                    </nz-form-control>
+                </nz-form-item>
 
-        <nz-form-item>
-            <nz-form-label nzFor="book.category" nzRequired>Category</nz-form-label>
-            <nz-form-control nzErrorTip="Please select category!">
-                <nz-select id="book.category" formControlName="category" [compareWith]="categoryComparator">
-                    @for (category of (categories$ | async); track category.id) {
-                        <nz-option [nzKey]="category.id" [nzValue]="category" [nzLabel]="category.name" />
-                    }
-                </nz-select>
-            </nz-form-control>
-        </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzFor="book.category" nzRequired>Category</nz-form-label>
+                    <nz-form-control nzErrorTip="Please select category!">
+                        <nz-select id="book.category" formControlName="category" [compareWith]="categoryComparator">
+                            @for (category of (categories$ | async); track category.id) {
+                            <nz-option [nzKey]="category.id" [nzValue]="category" [nzLabel]="category.name" />
+                            }
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
 
-        <nz-form-item>
-            <nz-form-label nzFor="book.publisher">Publisher</nz-form-label>
-            <nz-form-control>
-                <nz-select id="book.publisher" formControlName="publisher" [compareWith]="publisherComparator">
-                    @for (publisher of (publishers$ | async); track publisher.id) {
-                        <nz-option [nzKey]="publisher.id" [nzValue]="publisher" [nzLabel]="publisher.name" />
-                    }
-                </nz-select>
-            </nz-form-control>
-        </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzFor="book.publisher">Publisher</nz-form-label>
+                    <nz-form-control>
+                        <nz-select id="book.publisher" formControlName="publisher" [compareWith]="publisherComparator">
+                            @for (publisher of (publishers$ | async); track publisher.id) {
+                            <nz-option [nzKey]="publisher.id" [nzValue]="publisher" [nzLabel]="publisher.name" />
+                            }
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
 
-        <nz-form-item>
-            <nz-form-label nzFor="book.topic">Topics</nz-form-label>
-            <nz-form-control>
-                <nz-select id="book.topic" formControlName="topics" nzMode="tags" [compareWith]="topicComparator">
-                    @for (topic of (topics$ | async); track topic.id) {
-                        <nz-option [nzKey]="topic.id" [nzValue]="topic" [nzLabel]="topic.name" />
-                    }
-                </nz-select>
-            </nz-form-control>
-        </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzFor="book.topic">Topics</nz-form-label>
+                    <nz-form-control>
+                        <nz-select id="book.topic" formControlName="topics" nzMode="tags"
+                            [compareWith]="topicComparator">
+                            @for (topic of (topics$ | async); track topic.id) {
+                            <nz-option [nzKey]="topic.id" [nzValue]="topic" [nzLabel]="topic.name" />
+                            }
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
 
-        <form-actions [buttons]="formButtons" />
-    </form>
+                <form-actions [buttons]="formButtons" />
+            </form>
+        </nz-tab>
+
+        @if (id) {
+        <nz-tab nzTitle="Files">
+
+            @for (file of (files$ | async); track file.id) {
+            <div>
+                {{ file.path + file.filename }}
+            </div>
+            }
+
+            <nz-form-item>
+                <nz-form-label>Files</nz-form-label>
+                <nz-form-control>
+                    <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+                        <button nz-button type="button">
+                            <nz-icon nzType="upload" />
+                            Click to Upload
+                        </button>
+                    </nz-upload>
+
+                    <button nz-button type="button" nzType="primary" [nzLoading]="uploading" (click)="handleUpload()"
+                        [disabled]="fileList.length === 0">
+                        {{ uploading ? 'Uploading' : 'Start Upload' }}
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </nz-tab>
+        }
+    </nz-tabset>
+
 </nz-card>

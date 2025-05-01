@@ -1,10 +1,12 @@
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { StorageService } from "@services/storage.service";
 import { BookDTO } from "@features/book/entities/book.dto";
+import { Nullable } from "@common/types/helpers";
+import { FileDTO } from "@features/file/entities/file.dto";
 
 const API = "http://localhost:8080/api/";
 
@@ -16,6 +18,21 @@ export class BookService {
     public getAll(): Observable<BookDTO[]> {
         return this.http.get<BookDTO[]>(
             API.concat("books"),
+            {
+                headers: {
+                    Authorization: this.storage.getData("access_token") ?? ""
+                }
+            }
+        );
+    }
+
+    public getFiles(id: Nullable<string>): Observable<FileDTO[]> {
+        if (!id) {
+            return of([]);
+        }
+
+        return this.http.get<FileDTO[]>(
+            API.concat(`books/${id}/files`),
             {
                 headers: {
                     Authorization: this.storage.getData("access_token") ?? ""
@@ -62,6 +79,18 @@ export class BookService {
     public remove(id: string): Observable<BookDTO> {
         return this.http.delete<BookDTO>(
             API.concat(`books/${id}`),
+            {
+                headers: {
+                    Authorization: this.storage.getData("access_token") ?? ""
+                }
+            }
+        );
+    }
+
+    public upload(id: string, data: FormData): Observable<boolean> {
+        return this.http.post<boolean>(
+            API.concat(`books/${id}/upload`),
+            data,
             {
                 headers: {
                     Authorization: this.storage.getData("access_token") ?? ""
