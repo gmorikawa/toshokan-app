@@ -78,12 +78,30 @@
 
         @if (id) {
         <nz-tab nzTitle="Files">
-
-            @for (file of (files$ | async); track file.id) {
-            <div>
-                {{ file.path + file.filename }}
-            </div>
-            }
+            <nz-table #filesTable [nzData]="(files$ | async) ?? []">
+                <thead>
+                    <tr>
+                        <th>Path</th>
+                        <th>Name</th>
+                        <th>State</th>
+                        <th>Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (file of filesTable.data; track file.id) {
+                    <tr>
+                        <td>{{ file.path }}</td>
+                        <td>{{ file.filename }}</td>
+                        <td>{{ file.state }}</td>
+                        <td>{{ file.type?.name }}</td>
+                        <td>
+                            <a (click)="handleDownload(id, file)">Download</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </nz-table>
 
             <nz-form-item>
                 <nz-form-label>Files</nz-form-label>

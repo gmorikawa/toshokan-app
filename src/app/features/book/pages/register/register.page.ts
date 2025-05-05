@@ -27,6 +27,9 @@ import { CategoryDTO } from "@features/category/entities/category.dto";
 import { PublisherDTO } from "@features/publisher/entities/publisher.dto";
 import { TopicDTO } from "@features/topic/entities/topic.dto";
 import { Observable } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
+import { FileDTO } from '@features/file/entities/file.dto';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 @Component({
     selector: "book-register-page",
@@ -40,6 +43,7 @@ import { Observable } from 'rxjs';
         NzInputModule,
         NzIconModule,
         NzSelectModule,
+        NzTableModule,
         NzTabsModule,
         NzUploadModule,
         ReactiveFormsModule,
@@ -183,5 +187,21 @@ export class BookRegisterPage {
                     }
                 });
         });
+    }
+
+    handleDownload(id: string, file: FileDTO): void {
+        this.service.download(id, file.id)
+            .subscribe((response: HttpResponse<Blob>) => {
+                if (response?.body) {
+                    const a = document.createElement("a");
+                    document.body.appendChild(a);
+                    const url = window.URL.createObjectURL(response?.body);
+                    a.href = url;
+                    a.download = file.filename;
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+                }
+            });
     }
 }

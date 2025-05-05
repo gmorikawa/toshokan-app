@@ -87,6 +87,19 @@ export class BookService {
         );
     }
 
+    public download(id: string, fileId: string): Observable<any> {
+        return this.http.get(
+            API.concat(`books/${id}/files/${fileId}`),
+            {
+                headers: {
+                    Authorization: this.storage.getData("access_token") ?? ""
+                },
+                observe: "response",
+                responseType: "blob"
+            }
+        );
+    }
+
     public upload(id: string, data: FormData): Observable<boolean> {
         return this.http.post<boolean>(
             API.concat(`books/${id}/upload`),
