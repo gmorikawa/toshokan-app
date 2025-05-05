@@ -1,4 +1,3 @@
-import { filter } from 'rxjs/operators';
 import { Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
@@ -26,7 +25,7 @@ import { BookDTO } from "@features/book/entities/book.dto";
 import { CategoryDTO } from "@features/category/entities/category.dto";
 import { PublisherDTO } from "@features/publisher/entities/publisher.dto";
 import { TopicDTO } from "@features/topic/entities/topic.dto";
-import { Observable } from 'rxjs';
+import { BehaviorSubject, switchMap } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { FileDTO } from '@features/file/entities/file.dto';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -69,7 +68,9 @@ export class BookRegisterPage {
     readonly categories$ = this.categoryService.getAll();
     readonly publishers$ = this.publisherService.getAll();
     readonly topics$ = this.topicService.getAll();
-    readonly files$ = this.service.getFiles(this.id);
+
+    readonly refresh$ = new BehaviorSubject<void>(undefined);
+    readonly files$ = this.refresh$.pipe(switchMap(() => this.service.getFiles(this.id)));
 
     headers = {
         Authorization: this.storage.getData("access_token") ?? ""
@@ -180,6 +181,7 @@ export class BookRegisterPage {
                         this.uploading = false;
                         this.fileList = [];
                         console.log('upload successfully.');
+                        this.refresh$.next();
                     },
                     error: () => {
                         this.uploading = false;
