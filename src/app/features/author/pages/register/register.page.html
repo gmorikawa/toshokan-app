@@ -1,0 +1,12 @@
+<nz-card id="author-card">
+    <form nz-form nzLayout="vertical" [formGroup]="authorForm" class="author-form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+            <nz-form-label nzFor="checkPassword" nzRequired>Name</nz-form-label>
+            <nz-form-control nzErrorTip="Please input author name!" nzExtra="Author name must be unique">
+                <input type="text" nz-input formControlName="name" placeholder="Name" />
+            </nz-form-control>
+        </nz-form-item>
+
+        <form-actions [buttons]="formButtons" />
+    </form>
+</nz-card>

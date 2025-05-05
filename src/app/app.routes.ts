@@ -13,6 +13,9 @@ import { WhitepaperRegisterPage } from "@features/whitepaper/pages/register/regi
 import { PublisherListingPage } from "@features/publisher/pages/listing/listing.page";
 import { PublisherRegisterPage } from "@features/publisher/pages/register/register.page";
 
+import { AuthorListingPage } from "@features/author/pages/listing/listing.page";
+import { AuthorRegisterPage } from "@features/author/pages/register/register.page";
+
 import { CategoryListingPage } from "@features/category/pages/listing/listing.page";
 import { CategoryRegisterPage } from "@features/category/pages/register/register.page";
 
@@ -63,6 +66,18 @@ export const routes: Routes = [
             {
                 path: "publisher/register/:id",
                 component: PublisherRegisterPage
+            },
+            {
+                path: "author/listing",
+                component: AuthorListingPage
+            },
+            {
+                path: "author/register",
+                component: AuthorRegisterPage
+            },
+            {
+                path: "author/register/:id",
+                component: AuthorRegisterPage
             },
             {
                 path: "category/listing",
