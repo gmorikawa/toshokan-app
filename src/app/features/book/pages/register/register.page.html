@@ -27,7 +27,23 @@
                 <nz-form-item>
                     <nz-form-label nzFor="book.authors">Authors</nz-form-label>
                     <nz-form-control>
-                        <input id="book.authors" type="text" nz-input formControlName="authors" placeholder="Authors" />
+                        <nz-select id="book.authors" formControlName="authors" nzMode="tags"
+                            [compareWith]="authorComparator" [nzDropdownRender]="renderTemplate">
+                            @for (author of (authors$ | async); track author.id) {
+                            <nz-option [nzKey]="author.id" [nzValue]="author" [nzLabel]="author.name" />
+                            }
+                        </nz-select>
+
+                        <ng-template #renderTemplate>
+                            <nz-divider></nz-divider>
+                            <div class="container">
+                                <input type="text" nz-input #inputElement />
+                                <a class="add-item" (click)="addItem(inputElement)">
+                                    <nz-icon nzType="plus" />
+                                    Add item
+                                </a>
+                            </div>
+                        </ng-template>
                     </nz-form-control>
                 </nz-form-item>
 
@@ -61,9 +77,9 @@
                 </nz-form-item>
 
                 <nz-form-item>
-                    <nz-form-label nzFor="book.topic">Topics</nz-form-label>
+                    <nz-form-label nzFor="book.topics">Topics</nz-form-label>
                     <nz-form-control>
-                        <nz-select id="book.topic" formControlName="topics" nzMode="tags"
+                        <nz-select id="book.topics" formControlName="topics" nzMode="tags"
                             [compareWith]="topicComparator">
                             @for (topic of (topics$ | async); track topic.id) {
                             <nz-option [nzKey]="topic.id" [nzValue]="topic" [nzLabel]="topic.name" />

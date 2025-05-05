@@ -29,6 +29,10 @@ import { BehaviorSubject, switchMap } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { FileDTO } from '@features/file/entities/file.dto';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { AuthorService } from "@services/author.service";
+import { AuthorDTO } from "@features/author/entities/author.dto";
+import { Author } from "@features/author/entities/author.model";
+import { NzDividerModule } from "ng-zorro-antd/divider";
 
 @Component({
     selector: "book-register-page",
@@ -38,6 +42,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
         NzButtonModule,
         NzCheckboxModule,
         NzCardModule,
+        NzDividerModule,
         NzFormModule,
         NzInputModule,
         NzIconModule,
@@ -57,6 +62,7 @@ export class BookRegisterPage {
     private readonly categoryService = inject(CategoryService);
     private readonly publisherService = inject(PublisherService);
     private readonly topicService = inject(TopicService);
+    private readonly authorService = inject(AuthorService);
     private readonly formBuilder = inject(NonNullableFormBuilder);
     private readonly storage = inject(StorageService);
 
@@ -68,6 +74,9 @@ export class BookRegisterPage {
     readonly categories$ = this.categoryService.getAll();
     readonly publishers$ = this.publisherService.getAll();
     readonly topics$ = this.topicService.getAll();
+
+    readonly refreshAuthors$ = new BehaviorSubject<void>(undefined);
+    readonly authors$ = this.refreshAuthors$.pipe(switchMap(() => this.authorService.getAll()));
 
     readonly refresh$ = new BehaviorSubject<void>(undefined);
     readonly files$ = this.refresh$.pipe(switchMap(() => this.service.getFiles(this.id)));
@@ -94,7 +103,7 @@ export class BookRegisterPage {
     bookForm = new FormGroup({
         title: this.formBuilder.control<string>("", Validators.required),
         year: this.formBuilder.control<Nullable<number>>(null, Validators.required),
-        authors: this.formBuilder.control<string[]>([]),
+        authors: this.formBuilder.control<AuthorDTO[]>([]),
         description: this.formBuilder.control<string>(""),
         category: this.formBuilder.control<Nullable<CategoryDTO>>(null, Validators.required),
         publisher: this.formBuilder.control<Nullable<PublisherDTO>>(null),
@@ -129,6 +138,10 @@ export class BookRegisterPage {
 
     topicComparator(topic1: TopicDTO, topic2: TopicDTO): boolean {
         return topic1?.id === topic2?.id;
+    }
+
+    authorComparator(author1: AuthorDTO, author2: AuthorDTO): boolean {
+        return author1?.id === author2?.id;
     }
 
     publisherComparator(publisher1: PublisherDTO, publisher2: PublisherDTO): boolean {
@@ -205,5 +218,13 @@ export class BookRegisterPage {
                     a.remove();
                 }
             });
+    }
+
+    addItem(input: HTMLInputElement): void {
+        const value = input.value;
+        
+        this.authorService.create({ name: value } as AuthorDTO).subscribe((author) => {
+            this.refreshAuthors$.next();
+        });
     }
 }

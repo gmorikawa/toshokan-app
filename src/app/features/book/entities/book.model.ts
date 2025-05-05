@@ -1,3 +1,4 @@
+import { AuthorDTO } from "@features/author/entities/author.dto";
 import { BookDTO } from "@features/book/entities/book.dto";
 import { CategoryDTO } from "@features/category/entities/category.dto";
 import { PublisherDTO } from "@features/publisher/entities/publisher.dto";
@@ -7,7 +8,7 @@ export class Book implements BookDTO {
     private _id: string;
     private _title: string;
     private _year: number;
-    private _authors: string[];
+    private _authors: AuthorDTO[];
     private _description?: string;
     private _categoryId: string;
     private _category: CategoryDTO | null;
@@ -54,11 +55,11 @@ export class Book implements BookDTO {
         this._year = value;
     }
 
-    get authors(): string[] {
+    get authors(): AuthorDTO[] {
         return this._authors;
     }
 
-    set authors(value: string[]) {
+    set authors(value: AuthorDTO[]) {
         this._authors = value;
     }
 
